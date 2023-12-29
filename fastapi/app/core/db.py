@@ -1,12 +1,10 @@
 import mysql.connector
 
+
 class Database:
     def __init__(self) -> None:
         self.conn = mysql.connector.connect(
-            host="172.233.153.32",
-            user="ADMIN",
-            password="01/01/01",
-            database="point_of_sale"
+            host="localhost", user="pos", password="pos123", database="point_of_sale"
         )
 
     def __enter__(self):
