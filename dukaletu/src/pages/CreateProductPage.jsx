@@ -33,7 +33,7 @@ function CreateProductPage() {
   const handleSaveProduct = (ev) => {
     ev.preventDefault();
 
-    const apiEndpoint = "http://localhost:8000/products";
+    const apiEndpoint = "http://172.233.153.32:8000/products";
 
     axios
       .post(apiEndpoint, product)

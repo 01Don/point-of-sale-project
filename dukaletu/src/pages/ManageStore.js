@@ -20,12 +20,12 @@ function ManageStore() {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8000/products").then((response) => {
+    axios.get("http://172.233.153.32:8000/products").then((response) => {
       setProducts(response.data);
     });
     console.log("Fetching sales data...");
     axios
-      .get("http://localhost:8000/sales")
+      .get("http://172.233.153.32:8000/sales")
       .then((response) => {
         console.log("Sales data fetched successfully:", response.data);
         setSales(response.data);

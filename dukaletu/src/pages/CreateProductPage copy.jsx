@@ -34,7 +34,7 @@ function CreateProductPage() {
         category: product.category,
       };
 
-      const response = await axios.post('http://localhost:8000/products', dataToSend);
+      const response = await axios.post('http://172.233.153.32:8000/products', dataToSend);
 
       if (response.status === 201) {
         console.log('Product added successfully');
