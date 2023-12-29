@@ -1,0 +1,120 @@
+/* Sidebar.css */
+
+.sidebar {
+  width: 0;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #1368d1;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 1;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.sidebar.open {
+  width: 250px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #fff;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+  border: #fff;
+}
+
+/* In Sidebar.css */
+.icon {
+  margin-right: 8px; /* Add space between icon and text */
+  vertical-align: middle; /* Vertically align the icon with text */
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 20px;
+}
+
+.sidebar-links li {
+  margin-bottom: 16px; /* Add space between each link */
+}
+
+.sidebar-links a {
+  color: white; /* Set link color to white */
+  text-decoration: none; /* Remove underline */
+}
+
+.sidebar-links a:hover {
+  text-decoration: underline; /* Add underline on hover (optional) */
+}
+
+/* In Sidebar.css */
+.icon {
+  margin-right: 8px; /* Add space between icon and text */
+  vertical-align: middle; /* Vertically align the icon with text */
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 20px;
+}
+
+.sidebar-links li {
+  margin-bottom: 16px; /* Add space between each link */
+}
+
+.sidebar-links a {
+  color: white; /* Set link color to white */
+  text-decoration: none; /* Remove underline */
+}
+
+.sidebar-links a:hover {
+  text-decoration: underline; /* Add underline on hover (optional) */
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    width: 250px;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #fff;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+  border: #fff;
+}
+
+/* In Sidebar.css */
+.icon {
+  margin-right: 8px; /* Add space between icon and text */
+  vertical-align: middle; /* Vertically align the icon with text */
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 20px;
+}
+
+.sidebar-links li {
+  margin-bottom: 16px; /* Add space between each link */
+}
+
+.sidebar-links a {
+  color: white; /* Set link color to white */
+  text-decoration: none; /* Remove underline */
+}
+
+.sidebar-links a:hover {
+  text-decoration: underline; /* Add underline on hover (optional) */
+}

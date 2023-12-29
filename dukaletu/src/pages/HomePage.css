@@ -1,0 +1,173 @@
+/* styles.css */
+
+/* Global styles */
+/* styles.css */
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #F7F8FA;
+}
+
+
+/* Main content styles */
+main {
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #F7F8FA;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+form {
+  width: 100%;
+}
+
+/* Navbar styles in HomePage.css */
+.navbar {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  color: #1A72DD;
+  padding: 10px 0px;
+}
+
+h1 {
+  margin: 0 auto;
+}
+
+/* Sidebar styles in Sidebar.css */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Start hidden outside the viewport */
+  width: 250px; /* Width of the sidebar */
+  height: 100%;
+  background-color: #333;
+  color: #fff;
+  transition: left 0.3s ease-in-out; /* Smooth sliding transition */
+  z-index: 1;
+}
+
+.sidebar.active {
+  left: 0; /* Display the sidebar when it's active */
+}
+
+/* Sidebar toggle button styles in HomePage.css */
+.sidebar-toggle {
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+/* Input field styles in HomePage.css */
+.input-field {
+  width: 50px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 50px;
+}
+
+/* Select field styles in HomePage.css */
+.select-field {
+  width: 115px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  appearance: none;
+  background-position: right center;
+  background-repeat: no-repeat;
+  /* Customize dropdown arrow icon if needed */
+}
+
+/* Input container styles in HomePage.css */
+.input-container {
+  display: flex;
+  justify-content: space-between; /* Spacing between left and right inputs */
+  margin-bottom: 10px; /* Add spacing between label-input pairs */
+}
+
+.left-input,
+.right-input {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically inside left and right inputs */
+}
+
+/* Label styles in HomePage.css */
+.bold-label {
+  font-weight: bold;
+  margin-bottom: 5px; /* Add spacing between the label and input/select */
+}
+
+/* Button container styles in HomePage.css */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Blue button styles in HomePage.css */
+.blue-button {
+  background-color: #1A72DD;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  position: relative;
+}
+
+/* Total bar styles in HomePage.css */
+.total-bar {
+  background-color: #020202;
+  height: 50px;
+  color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center content horizontally */
+  position: absolute;
+  bottom: 20px;
+  left: 13px;
+  right: 0;
+  width: 300px;
+}
+
+/* Cart info styles in HomePage.css */
+.cart-info {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.item-count {
+  font-weight: bold;
+  margin-left: 8px; /* Adjust the margin to add space between the cart picture and text */
+}
+
+.total-info {
+  font-weight: bold;
+  margin-left: 80px; /* Adjust the margin to decrease the space between "0 Item" and "Total: Tsh0.00" */
+}
+
+/* Add button styles in HomePage.css */
+.add-button {
+  background-color: rgb(236, 202, 50);
+  border: #fff;
+  border-radius: 8px;
+  width: 60px;
+  height: 50px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+}

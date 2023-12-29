@@ -1,0 +1,128 @@
+.sales-form .form input {
+  max-width: 7em;
+}
+
+.sales-form .form button:hover {
+  background-color: #0056b3;
+}
+
+.sales-form .form select {
+  padding: 0.4em;
+}
+
+.flex {
+  display: flex;
+  gap: 1em;
+  justify-content: space-between;
+  border: rgb(248, 212, 53) solid;
+  width: 100%;
+}
+
+.submit-button {
+  border-radius: 8px;
+  border: #fff;
+  background-color: #0056b3;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+/* SaleForm.css */
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: ;
+  align-items: center;
+}
+
+.product-control {
+  display: flex;
+  font-weight: bold;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-left: 35px;
+  width: 150px;
+}
+
+.quantity-control {
+  display: flex;
+  margin-top: -60px;
+  margin-left: 250px;
+  flex-direction: column;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.add-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+}
+
+.input-form {
+  border-radius: 6px;
+}
+.input-form1 {
+  width: 70px;
+  border-radius: 6px;
+  height: 35px;
+}
+.del-button {
+  background-color: red;
+  border: red;
+  border-radius: 6px;
+  color: #fff;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+}
+.fields {
+  border: #0056b3 solid;
+  height: 100px;
+  border-radius: 6px;
+  width: 350px;
+}
+
+.del p {
+  text-align: center;
+  margin: 5px 0;
+}
+
+.del-button {
+  background-color: red;
+  border: red;
+  border-radius: 6px;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 5px;
+}
+.del {
+  width: 500px; /* Set the width to 500px for screens up to 768px */
+  margin: 0 auto; /* Center horizontally */
+  display: flex;
+  justify-content: center; /* Center horizontally within the .del element */
+  align-items: center; /* Center vertically within the .del element */
+}
+
+@media (max-width: 768px) {
+  /* Modify the layout for smaller screens */
+  .del .flex {
+    flex-direction: ;
+  }
+
+  .del {
+    width: 360px; /* Set the width to 500px for screens up to 768px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -35px;
+  }
+}

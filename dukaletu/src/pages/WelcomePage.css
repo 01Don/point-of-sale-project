@@ -1,0 +1,35 @@
+/* WelcomePage.css */
+
+.title-text {
+  text-align: center;
+  margin-top: 60px;
+  color: #1332bd;
+}
+
+.welcome-heading {
+  font-size: 22px;
+  font-weight: bold;
+  color: #2a3256;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.welcome-text {
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.welcome-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.btn-login {
+  width: 60%; /* Adjusted width */
+  font-size: 23px;
+  margin-top: 40px;
+  display: block; /* Make the button a block-level element for centering */
+  margin: 0 auto; /* Center the button */
+}
