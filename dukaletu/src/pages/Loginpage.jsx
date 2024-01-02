@@ -22,7 +22,7 @@ function Loginpage() {
 
   const handleLogin = () => {
     // Check if the entered email and password match the expected values
-    if (login.email === "ser1@gmail.com" && login.password === "010101") {
+    if (login.email === "user1@gmail.com" && login.password === "010101") {
       // Reset any previous error message
       setError(null);
 
