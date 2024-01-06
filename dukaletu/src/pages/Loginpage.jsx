@@ -21,19 +21,13 @@ function Loginpage() {
   };
 
   const handleLogin = () => {
-    // Check if the entered email and password match the expected values
     if (login.email === "user1@gmail.com" && login.password === "010101") {
-      // Reset any previous error message
       setError(null);
 
-      // Navigate to the desired page after successful login (e.g., WelcomePage)
       Navigate("/home");
 
-      // Optionally, you can store user login state or token in your app
-      // For now, let's just log a successful login message
       console.log("Login Successful");
     } else {
-      // Display an error message if the email or password is incorrect
       setError("Email or password is not correct");
     }
   };
