@@ -7,7 +7,7 @@ from datetime import datetime
 
 app = FastAPI()
 origins = [
-    "http://172.233.153.32:8000",
+    "http://172.233.153.32:3000",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -30,7 +30,6 @@ def get_user_id_from_login(username: str, password: str):
         if user:
             return user["user_id"]
         else:
-            # User authentication failed, return None or raise an exception
             return None
 
 
