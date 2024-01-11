@@ -7,7 +7,7 @@ from datetime import datetime
 
 app = FastAPI()
 origins = [
-    "http://172.233.153.32:3000",
+    "http://172.233.153.32:8000",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -77,7 +77,7 @@ def get_sales():
             select_query = "SELECT * FROM sales"
             conn.execute(select_query)
             sales = conn.fetchall()
-            
+
             return sales
     except Exception as e:
         print("Error:", e)
