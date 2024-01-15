@@ -7,6 +7,7 @@ import WelcomePage from "./pages/WelcomePage";
 import ManageStore from "./pages/ManageStore";
 import ProductList from "./pages/ProductList";
 import SalesList from "./pages/SalesList";
+import UserForm from "./components/UserForm"; // Import the UserForm component
 
 function App() {
   // Initialize the list of created products
@@ -35,6 +36,8 @@ function App() {
         <Route path="/managestore" element={<ManageStore />} />
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/Saleslist" element={<SalesList />} />
+        <Route path="/userprofile" element={<UserForm />} />{" "}
+        {/* Add this line for the UserForm component */}
       </Routes>
     </Router>
   );

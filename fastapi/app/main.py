@@ -139,3 +139,18 @@ def get_user(user_id: int = None) -> schemas.User | typing.List[schemas.User]:
             select_query = "SELECT * FROM users"
             conn.execute(select_query)
             return conn.fetchall()
+
+
+@app.post("/users")
+def create_user_profile(data: schemas.User):
+    with db.Database() as conn:
+        insert_query = (
+            "INSERT INTO users (user_id, password,role,email) VALUES (%s, %s, %s, %s)"
+        )
+        params = (
+            data.password,
+            data.role,
+            data.email,
+        )
+
+    return {"message": "User profile created successfully"}
