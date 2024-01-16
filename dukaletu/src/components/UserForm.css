@@ -1,10 +1,7 @@
-/* src/components/UserForm.css */
-
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   margin-top: 70px;
 }
 
@@ -12,7 +9,6 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  width: 30%; /* Set a specific width for labels */
 }
 
 input {
@@ -25,7 +21,7 @@ input {
 }
 
 button {
-  background-color: #4caf50;
+  background-color: #ffdb39;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -35,5 +31,5 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #ffe920;
 }

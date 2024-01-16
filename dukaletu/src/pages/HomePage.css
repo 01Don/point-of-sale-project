@@ -1,16 +1,9 @@
-/* styles.css */
-
-/* Global styles */
-/* styles.css */
-
-/* Global styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #F7F8FA;
+  background-color: #f7f8fa;
 }
-
 
 /* Main content styles */
 main {
@@ -18,7 +11,7 @@ main {
   height: 100vh;
   margin: 0 auto;
   padding: 20px;
-  background-color: #F7F8FA;
+  background-color: #f7f8fa;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
 }
@@ -32,7 +25,7 @@ form {
   display: flex;
   align-items: center;
   background-color: #fff;
-  color: #1A72DD;
+  color: #1a72dd;
   padding: 10px 0px;
 }
 
@@ -115,7 +108,7 @@ h1 {
 
 /* Blue button styles in HomePage.css */
 .blue-button {
-  background-color: #1A72DD;
+  background-color: #1a72dd;
   color: white;
   padding: 10px 20px;
   border: none;

@@ -3,13 +3,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar1 from "../pages/Sidebar1";
-import "./UserForm.css"; // Import the CSS file for styling
+import "./UserForm.css";
 
 function UserForm() {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
-    role: "", // New role field
   });
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -38,7 +37,7 @@ function UserForm() {
       .then((response) => {
         console.log("Data sent successfully", response.data);
 
-        setUserData({ email: "", password: "", role: "" }); // Clear all fields
+        setUserData({ email: "", password: "" }); // Clear all fields
       })
       .catch((error) => {
         console.error("Error sending data:", error);
@@ -78,15 +77,7 @@ function UserForm() {
             onChange={handleInputChange}
           />
         </label>
-        <label>
-          Role:
-          <input
-            type="text"
-            name="role"
-            value={userData.role}
-            onChange={handleInputChange}
-          />
-        </label>
+
         <div className="text-center">
           <button
             type="button"
