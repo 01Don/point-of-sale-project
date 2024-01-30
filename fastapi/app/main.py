@@ -206,19 +206,19 @@ def login_user(user: schemas.User):
         return {"authenticated": False}
 
 
-@app.delete("/users/{user_id}")
-def delete_user(user_id: int):
+@app.delete("/delete-account")
+def delete_user(email: str):
     with db.Database() as conn:
-        # Check if the user with the provided user_id exists
-        check_user_query = "SELECT user_id FROM users WHERE user_id = %s"
-        conn.execute(check_user_query, (user_id,))
+        # Check if the user with the provided email exists
+        check_user_query = "SELECT user_id FROM users WHERE email = %s"
+        conn.execute(check_user_query, (email,))
         existing_user = conn.fetchone()
 
         if not existing_user:
             raise HTTPException(status_code=404, detail="User not found")
 
         # Delete the user from the database
-        delete_user_query = "DELETE FROM users WHERE user_id = %s"
-        conn.execute(delete_user_query, (user_id,))
+        delete_user_query = "DELETE FROM users WHERE email = %s"
+        conn.execute(delete_user_query, (email,))
 
-        return {"message": f"User with ID {user_id} deleted successfully"}
+        return {"message": f"User with email {email} deleted successfully"}

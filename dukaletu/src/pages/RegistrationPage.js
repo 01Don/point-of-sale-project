@@ -133,7 +133,6 @@ function RegistrationPage() {
                 />
               </div>
 
-              {/* Input for Password */}
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">
                   Password
