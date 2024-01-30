@@ -49,6 +49,12 @@ function RegistrationPage() {
 
       // Registration successful, you can redirect or perform other actions
       console.log("Registration successful");
+      setRegistration({
+        email: "",
+        password: "",
+        confirmPassword: "",
+        role: "",
+      });
     } catch (error) {
       setError("Registration failed");
       console.error("Error during registration:", error);

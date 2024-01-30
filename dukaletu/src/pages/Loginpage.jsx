@@ -7,7 +7,7 @@ function Loginpage() {
   const [login, setLogin] = useState({
     email: "",
     password: "",
-    role: "", // Added role field
+    role: "",
   });
   const [error, setError] = useState(null); // State for error message
   const Navigate = useNavigate(); // Used for navigation after successful login
