@@ -64,18 +64,15 @@ function RegistrationPage() {
     }
   };
 
-  // Function to handle user account deletion
   const handleDeleteAccount = async () => {
     try {
-      // Send account deletion request to the server
       const response = await fetch(
-        "http://172.233.153.32:8000/delete-account",
+        `http://172.233.153.32:8000/delete-account?email=${registration.email}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email: registration.email }),
         }
       );
 
@@ -83,7 +80,6 @@ function RegistrationPage() {
         throw new Error("Account deletion failed");
       }
 
-      // Account deletion successful, you can redirect or perform other actions
       console.log("Account deletion successful");
     } catch (error) {
       setError("Account deletion failed");
@@ -116,7 +112,6 @@ function RegistrationPage() {
         <div className="container my-3">
           <div className="bg-light p-4 mt-4 rounded-3">
             <form>
-              {/* Input for Email */}
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
                   Email
