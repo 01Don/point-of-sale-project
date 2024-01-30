@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
-import "./Loginpage.css";
 
 function Loginpage() {
   const iconStyle = { color: "white" };
   const [login, setLogin] = useState({
     email: "",
     password: "",
+    role: "", // Added role field
   });
   const [error, setError] = useState(null); // State for error message
   const Navigate = useNavigate(); // Used for navigation after successful login
@@ -20,15 +20,33 @@ function Loginpage() {
     });
   };
 
-  const handleLogin = () => {
-    if (login.email === "user1@gmail.com" && login.password === "010101") {
-      setError(null);
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(login),
+      });
 
-      Navigate("/home");
+      if (!response.ok) {
+        throw new Error("Authentication failed");
+      }
 
-      console.log("Login Successful");
-    } else {
-      setError("Email or password is not correct");
+      const data = await response.json();
+
+      // Check if authentication was successful
+      if (data.authenticated) {
+        setError(null);
+        Navigate("/home");
+        console.log("Login Successful");
+      } else {
+        setError("Email, password, or role is not correct");
+      }
+    } catch (error) {
+      setError("Authentication failed");
+      console.error("Error during authentication:", error);
     }
   };
 
@@ -82,6 +100,21 @@ function Loginpage() {
                   id="password"
                   placeholder="At least 8 characters"
                   value={login.password}
+                  onChange={handleInputChange}
+                  className="form-control"
+                  style={{ backgroundColor: "white", marginBottom: "60px" }}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="role" className="form-label">
+                  Role
+                </label>
+                <input
+                  type="text"
+                  name="role"
+                  id="role"
+                  placeholder="Role"
+                  value={login.role}
                   onChange={handleInputChange}
                   className="form-control"
                   style={{ backgroundColor: "white", marginBottom: "60px" }}

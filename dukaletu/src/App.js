@@ -7,7 +7,7 @@ import WelcomePage from "./pages/WelcomePage";
 import ManageStore from "./pages/ManageStore";
 import ProductList from "./pages/ProductList";
 import SalesList from "./pages/SalesList";
-import UserForm from "./components/UserForm"; // Import the UserForm component
+import RegistrationPage from "./pages/RegistrationPage"; // Import RegistrationPage
 
 function App() {
   // Initialize the list of created products
@@ -32,12 +32,12 @@ function App() {
           }
         />
         <Route path="/login" element={<Loginpage />} />
+        <Route path="/register" element={<RegistrationPage />} />{" "}
         <Route path="/" element={<WelcomePage />} />
         <Route path="/managestore" element={<ManageStore />} />
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/Saleslist" element={<SalesList />} />
-        <Route path="/userprofile" element={<UserForm />} />{" "}
-        {/* Add this line for the UserForm component */}
+        {/* Add other routes as needed */}
       </Routes>
     </Router>
   );

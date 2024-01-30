@@ -7,7 +7,7 @@ from datetime import datetime
 
 app = FastAPI()
 origins = [
-    "http://172.233.153.32:3000",
+    "http://localhost:3000",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -154,3 +154,53 @@ def create_user_profile(data: schemas.User):
         )
 
     return {"message": "User profile created successfully"}
+
+
+@app.post("/register")
+def register_user(user: schemas.User):
+    with db.Database() as conn:
+        # Check if the user with the provided email already exists
+        check_user_query = "SELECT user_id FROM users WHERE email = %s"
+        conn.execute(check_user_query, (user.email,))
+        existing_user = conn.fetchone()
+
+        if existing_user:
+            raise HTTPException(
+                status_code=400, detail="User with this email already exists"
+            )
+
+        # Insert the new user into the database
+        insert_user_query = (
+            "INSERT INTO users (password, role, email) VALUES (%s, %s, %s)"
+        )
+        params = (
+            user.password,
+            user.role,
+            user.email,
+        )
+        conn.execute(insert_user_query, params)
+
+        return {"message": "User registered successfully"}
+
+
+def get_user_id_from_login(email: str, password: str, role: str):
+    with db.Database() as conn:
+        select_user_query = (
+            "SELECT user_id FROM users WHERE email = %s AND password = %s AND role = %s"
+        )
+        conn.execute(select_user_query, (email, password, role))
+        user = conn.fetchone()
+
+        if user:
+            return user["user_id"]
+        else:
+            return None
+
+
+@app.post("/login")
+def login_user(user: schemas.User):
+    user_id = get_user_id_from_login(user.email, user.password, user.role)
+    if user_id:
+        return {"authenticated": True}
+    else:
+        return {"authenticated": False}
