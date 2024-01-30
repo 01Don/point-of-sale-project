@@ -23,10 +23,12 @@ function RegistrationPage() {
     });
   };
 
+  // Function to toggle password visibility
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
+  // Function to handle user registration
   const handleRegistration = async () => {
     // Validate passwords match
     if (registration.password !== registration.confirmPassword) {
@@ -35,7 +37,8 @@ function RegistrationPage() {
     }
 
     try {
-      const response = await fetch("http://172.233.153.32:8000/register", {
+      // Send registration request to the server
+      const response = await fetch("http://localhost:8000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,6 +61,30 @@ function RegistrationPage() {
     } catch (error) {
       setError("Registration failed");
       console.error("Error during registration:", error);
+    }
+  };
+
+  // Function to handle user account deletion
+  const handleDeleteAccount = async () => {
+    try {
+      // Send account deletion request to the server
+      const response = await fetch("http://localhost:8000/delete-account", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: registration.email }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Account deletion failed");
+      }
+
+      // Account deletion successful, you can redirect or perform other actions
+      console.log("Account deletion successful");
+    } catch (error) {
+      setError("Account deletion failed");
+      console.error("Error during account deletion:", error);
     }
   };
 
@@ -86,12 +113,13 @@ function RegistrationPage() {
         <div className="container my-3">
           <div className="bg-light p-4 mt-4 rounded-3">
             <form>
+              {/* Input for Email */}
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
                   Email
                 </label>
                 <input
-                  type="email" // Use type="email" for email validation
+                  type="email"
                   name="email"
                   id="email"
                   placeholder="Email"
@@ -101,6 +129,8 @@ function RegistrationPage() {
                   style={{ backgroundColor: "white", marginBottom: "20px" }}
                 />
               </div>
+
+              {/* Input for Password */}
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">
                   Password
@@ -125,6 +155,8 @@ function RegistrationPage() {
                   </button>
                 </div>
               </div>
+
+              {/* Input for Confirm Password */}
               <div className="mb-3">
                 <label htmlFor="confirmPassword" className="form-label">
                   Confirm Password
@@ -140,6 +172,8 @@ function RegistrationPage() {
                   style={{ backgroundColor: "white", marginBottom: "20px" }}
                 />
               </div>
+
+              {/* Input for User Role */}
               <div className="mb-3">
                 <label htmlFor="role" className="form-label">
                   User Role
@@ -155,6 +189,8 @@ function RegistrationPage() {
                   style={{ backgroundColor: "white", marginBottom: "60px" }}
                 />
               </div>
+
+              {/* Registration Button */}
               <div className="text-center">
                 <button
                   type="button"
@@ -165,7 +201,21 @@ function RegistrationPage() {
                   Register
                 </button>
               </div>
+
+              {/* Delete Account Button */}
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={handleDeleteAccount}
+                  className="btn btn-danger btn-lg mt-3"
+                  style={{ width: "100%" }}
+                >
+                  Delete Account
+                </button>
+              </div>
             </form>
+
+            {/* Display Error Message */}
             {error && (
               <div className="text-center text-danger mt-3">{error}</div>
             )}
