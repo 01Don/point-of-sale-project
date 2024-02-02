@@ -11,6 +11,7 @@ function ManageStore() {
     axios.get("http://172.233.153.32:8000/products").then((response) => {
       setProducts(response.data);
     });
+
     console.log("Fetching sales data...");
     axios
       .get("http://172.233.153.32:8000/sales")
@@ -43,21 +44,26 @@ function ManageStore() {
           <button onClick={() => handleGenerateReport('day')}>Generate Day Report</button>
           <button onClick={() => handleGenerateReport('week')}>Generate Week Report</button>
           <button onClick={() => handleGenerateReport('month')}>Generate Month Report</button>
-          {/* Add more buttons or UI elements for other report types as needed */}
+         
           <table className="sales-table">
             <thead>
               <tr>
                 <th>Sale Date</th>
+                <th>Product Name</th>
                 <th>Total Amount</th>
               </tr>
             </thead>
             <tbody>
-              {sales.map((sale) => (
-                <tr key={sale.id} className="sale-row">
-                  <td>{sale.sale_date}</td>
-                  <td>Tsh {sale.prod_saleprice}</td>
-                </tr>
-              ))}
+              {sales.map((sale) => {
+                const product = products.find((p) => p.id === sale.product_id);
+                return (
+                  <tr key={sale.id} className="sale-row">
+                    <td>{sale.sale_date}</td>
+                    <td>{product ? product.product_name : "N/A"}</td>
+                    <td>Tsh {sale.prod_saleprice}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
