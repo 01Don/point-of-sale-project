@@ -26,8 +26,21 @@ function ManageStore() {
       });
   }, []);
 
+<<<<<<< HEAD
   const getProductById = (productId) => {
     return products.find((product) => product.id === productId);
+=======
+  const handleGenerateReport = (reportType) => {
+    // Add logic to fetch different reports based on reportType
+    axios.get(`http://172.233.153.32:8000/reports/${reportType}`)
+      .then((response) => {
+        console.log(`${reportType} report fetched successfully:`, response.data);
+        // Handle the retrieved report data as needed
+      })
+      .catch((error) => {
+        console.error(`Error fetching ${reportType} report:`, error);
+      });
+>>>>>>> 38b33c9a69b63fb751f9c01bc028e3ee965c202f
   };
 
   return (
@@ -35,6 +48,10 @@ function ManageStore() {
       <div className="table-container">
         <div className="table-container">
           <h2>List of Sales</h2>
+          <button onClick={() => handleGenerateReport('day')}>Generate Day Report</button>
+          <button onClick={() => handleGenerateReport('week')}>Generate Week Report</button>
+          <button onClick={() => handleGenerateReport('month')}>Generate Month Report</button>
+         
           <table className="sales-table">
             <thead>
               <tr>
@@ -44,6 +61,7 @@ function ManageStore() {
               </tr>
             </thead>
             <tbody>
+<<<<<<< HEAD
               {sales.map((sale) => (
                 <tr key={sale.id} className="sale-row">
                   <td>{sale.sale_date}</td>
@@ -53,6 +71,18 @@ function ManageStore() {
                   <td>Tsh {sale.prod_saleprice}</td>
                 </tr>
               ))}
+=======
+              {sales.map((sale) => {
+                const product = products.find((p) => p.id === sale.product_id);
+                return (
+                  <tr key={sale.id} className="sale-row">
+                    <td>{sale.sale_date}</td>
+                    <td>{product ? product.product_name : "N/A"}</td>
+                    <td>Tsh {sale.prod_saleprice}</td>
+                  </tr>
+                );
+              })}
+>>>>>>> 38b33c9a69b63fb751f9c01bc028e3ee965c202f
             </tbody>
           </table>
         </div>
