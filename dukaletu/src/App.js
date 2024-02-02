@@ -37,7 +37,6 @@ function App() {
         <Route path="/managestore" element={<ManageStore />} />
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/Saleslist" element={<SalesList />} />
-        {/* Add other routes as needed */}
       </Routes>
     </Router>
   );

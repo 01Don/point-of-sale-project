@@ -8,12 +8,15 @@ function ManageStore() {
   console.log("Data: ", sales);
 
   useEffect(() => {
-    axios.get("http://172.233.153.32:8000/products").then((response) => {
+    axios.get("http://172.233.153.32
+:8000/products").then((response) => {
       setProducts(response.data);
     });
+
     console.log("Fetching sales data...");
     axios
-      .get("http://172.233.153.32:8000/sales")
+      .get("http://172.233.153.32
+:8000/sales")
       .then((response) => {
         console.log("Sales data fetched successfully:", response.data);
         setSales(response.data);
@@ -22,6 +25,10 @@ function ManageStore() {
         console.error("Error fetching sales data:", error);
       });
   }, []);
+
+  const getProductById = (productId) => {
+    return products.find((product) => product.id === productId);
+  };
 
   return (
     <div>
@@ -32,6 +39,7 @@ function ManageStore() {
             <thead>
               <tr>
                 <th>Sale Date</th>
+                <th>Product Name</th>
                 <th>Total Amount</th>
               </tr>
             </thead>
@@ -39,6 +47,9 @@ function ManageStore() {
               {sales.map((sale) => (
                 <tr key={sale.id} className="sale-row">
                   <td>{sale.sale_date}</td>
+                  <td>
+                    {getProductById(sale.product_id)?.product_name || "Unknown"}
+                  </td>
                   <td>Tsh {sale.prod_saleprice}</td>
                 </tr>
               ))}

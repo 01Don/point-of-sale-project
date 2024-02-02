@@ -24,7 +24,9 @@ export default function SaleForm({ products }) {
   };
 
   const handlePostSales = (ev) => {
-    let url = "http://172.233.153.32:8000/sales";
+    let url = "http://172.233.153.32
+
+:8000/sales";
     axios
       .post(url, sales)
       .then((res) => {

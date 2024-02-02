@@ -4,7 +4,8 @@ import mysql.connector
 class Database:
     def __init__(self) -> None:
         self.conn = mysql.connector.connect(
-            host="localhost",
+            host="172.233.153.32
+",
             user="pos",
             password="pos123",
             database="point_of_sale",
