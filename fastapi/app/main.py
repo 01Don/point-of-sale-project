@@ -7,7 +7,7 @@ from datetime import datetime
 
 app = FastAPI()
 origins = [
-    "http://172.233.153.32:3000",
+    "http://localhost:3000",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -38,35 +38,43 @@ def get_user_id_from_login(username: str, password: str):
 def get_product(prod_id: int = None) -> schemas.Product | typing.List[schemas.Product]:
     with db.Database() as conn:
         if prod_id:
-            select_query = "SELECT * FROM products WHERE prod_id = %s"
+            select_query = "SELECT prod_id, prod_name, prod_category, prod_quantity, prod_buyprice, prod_saleprice, created_at FROM products WHERE prod_id = %s"
             conn.execute(select_query, (prod_id,))
-
             product = conn.fetchone()
             if product:
-                p = schemas.Product(**product)
-            return product
+                product_dict = dict(product)
+                product_dict["created_at"] = str(product_dict["created_at"])  # Convert datetime to string
+                p = schemas.Product(**product_dict)
+                return p  # Return the instance of schemas.Product
+            else:
+                return None  # Return None when product is not found by prod_id
         else:
-            select_query = "SELECT * FROM products"
+            select_query = "SELECT prod_id, prod_name, prod_category, prod_quantity, prod_buyprice, prod_saleprice, created_at FROM products"
             conn.execute(select_query)
             result = conn.fetchall()
-
-            return result
+            # Convert each product dictionary to schemas.Product
+            products = []
+            for prod in result:
+                prod_dict = dict(prod)
+                prod_dict["created_at"] = str(prod_dict["created_at"])  # Convert datetime to string
+                products.append(schemas.Product(**prod_dict))
+            return products  # Return the list of schemas.Product instances
 
 
 @app.post("/products")
-def create_product(data: schemas.Product):
+def create_product(product: schemas.Product):
     with db.Database() as conn:
         insert_query = "INSERT INTO products (prod_name, prod_category, prod_quantity, prod_buyprice, prod_saleprice) VALUES (%s, %s, %s, %s, %s)"
         params = (
-            data.prod_name,
-            data.prod_category,
-            data.prod_quantity,
-            data.prod_buyprice,
-            data.prod_saleprice,
+            product.prod_name,
+            product.prod_category,
+            product.prod_quantity,
+            product.prod_buyprice,
+            product.prod_saleprice,
         )
-        result = conn.execute(insert_query, params)
+        conn.execute(insert_query, params)
 
-        return result
+    return {"message": "Product created successfully"}
 
 
 @app.get("/sales")
@@ -91,28 +99,37 @@ def create_sales(sales: List[schemas.Sale]):
         for sale in sales:
             # Perform a lookup to get the prod_saleprice and prod_name based on prod_id
             select_prod_info_query = (
-                "SELECT prod_saleprice, prod_name FROM products WHERE prod_id = %s"
+                "SELECT prod_saleprice, prod_quantity FROM products WHERE prod_id = %s"
             )
             conn.execute(select_prod_info_query, (sale.prod_id,))
             result = conn.fetchone()
 
             if result:
                 prod_saleprice = result["prod_saleprice"]
-                prod_name = result["prod_name"]
-                total_sale_price = prod_saleprice * sale.prod_quantity
+                prod_quantity = result["prod_quantity"]
+                if sale.prod_quantity <= prod_quantity:
+                    total_sale_price = prod_saleprice * sale.prod_quantity
 
-                # Insert the sale record into the database
-                insert_query = "INSERT INTO sales (prod_id, prod_name, prod_quantity, prod_saleprice) VALUES (%s, %s, %s, %s)"
-                params = (
-                    sale.prod_id,
-                    prod_name,
-                    sale.prod_quantity,
-                    total_sale_price,
-                )
-                conn.execute(insert_query, params)
+                    # Insert the sale record into the database
+                    insert_query = "INSERT INTO sales (prod_id, prod_quantity, total_sale_price) VALUES (%s, %s, %s)"
+                    params = (
+                        sale.prod_id,
+                        sale.prod_quantity,
+                        total_sale_price,
+                    )
+                    conn.execute(insert_query, params)
 
-                # Append the total_sale_price to the list
-                total_sale_prices.append(total_sale_price)
+                    # Update product quantity after sale
+                    update_query = "UPDATE products SET prod_quantity = prod_quantity - %s WHERE prod_id = %s"
+                    conn.execute(update_query, (sale.prod_quantity, sale.prod_id))
+
+                    # Append the total_sale_price to the list
+                    total_sale_prices.append(total_sale_price)
+                else:
+                    # Handle the case where the sale quantity exceeds available stock
+                    raise HTTPException(
+                        status_code=400, detail=f"Insufficient stock for product ID: {sale.prod_id}"
+                    )
             else:
                 # Handle the case where the prod_id provided by the client is not found
                 raise HTTPException(
@@ -121,6 +138,7 @@ def create_sales(sales: List[schemas.Sale]):
 
     # Return the list of total_sale_prices in the response
     return {"total_sale_prices": total_sale_prices}
+
 
 
 @app.get("/users")

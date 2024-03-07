@@ -9,9 +9,9 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://172.233.153.32
+Open [http://localhost
 
-:3000](http://172.233.153.32
+:3000](http://localhost
 
 :3000) to view it in your browser.
 

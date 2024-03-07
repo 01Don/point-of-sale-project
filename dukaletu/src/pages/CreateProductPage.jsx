@@ -32,16 +32,15 @@ function CreateProductPage() {
 
   const handleSaveProduct = (ev) => {
     ev.preventDefault();
-
-    const apiEndpoint = "http://172.233.153.32
-
-:8000/products";
-
+  
+    const apiEndpoint = "http://localhost:8000/products";
+  
     axios
       .post(apiEndpoint, product)
       .then((response) => {
         console.log("Data sent successfully", response.data);
-
+  
+        // Reset the form fields
         setProduct({
           prod_name: "",
           prod_buyprice: "",
@@ -53,6 +52,8 @@ function CreateProductPage() {
       .catch((error) => {
         console.error("Error sending data:", error);
       });
+ 
+  
   };
 
   return (

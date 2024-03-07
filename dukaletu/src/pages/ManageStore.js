@@ -12,54 +12,43 @@ function ManageStore() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    // ... Your useEffect for fetching products
+    // Fetch products and sales data
+    axios.get("http://localhost:8000/products").then((response) => {
+      setProducts(response.data);
+    });
+    axios
+      .get("http://localhost:8000/sales")
+      .then((response) => {
+        setSales(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  useEffect(() => {
-    axios.get("http://172.233.153.32
-
-:8000/products").then((response) => {
-      setProducts(response.data);
-    });
-    console.log("Fetching sales data...");
-    axios
-      .get("http://172.233.153.32
-
-:8000/sales")
-      .then((response) => {
-        console.log("Sales data fetched successfully:", response.data);
-        setSales(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching sales data:", error);
-      });
-  }, []);
-
-  // Calculate total monthly revenue
-  const calculateTotalMonthlyRevenue = () => {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1; // January is 0, so add 1
-    const currentYear = currentDate.getFullYear();
-
-    const monthlySales = sales.filter((sale) => {
-      const saleDate = new Date(sale.date);
-      return (
-        saleDate.getMonth() + 1 === currentMonth &&
-        saleDate.getFullYear() === currentYear
-      );
-    });
-
-    const totalRevenue = monthlySales.reduce(
-      (total, sale) => total + sale.price,
-      0
-    );
-
-    return totalRevenue;
+  // Calculate total products remaining in stock
+  const calculateTotalProductsInStock = () => {
+    return products.reduce((total, product) => total + product.prod_quantity, 0);
   };
+
+  // Calculate total product value
+  const calculateTotalProductValue = () => {
+    return products.reduce((total, product) => total + (product.prod_quantity * product.prod_buyprice), 0);
+  };
+
+  // Find products that are running low in stock
+const findProductsRunningLow = () => {
+  const lowStockThreshold = 0.1; // 10% threshold
+
+  return products.filter((product) => {
+    const remainingPercentage = product.prod_quantity / product.initial_quantity;
+    return remainingPercentage <= lowStockThreshold;
+  });
+};
 
   return (
     <div className="page-container">
@@ -78,29 +67,37 @@ function ManageStore() {
           <div className="summary-box">
             <i className="fas fa-cube"></i>
             <p>Total Products</p>
-            <p>{products.length}</p>
+            <p>{calculateTotalProductsInStock()}</p>
           </div>
           <div className="summary-box">
             <i className="fas fa-dollar-sign"></i>
-            <p>Total Sales</p>
-            <p>{sales.length}</p>
+            <p>Total Product Value</p>
+            <p>Tsh {calculateTotalProductValue()}</p>
           </div>
           <div className="summary-box">
             <i className="fas fa-chart-line"></i>
             <p>Total Monthly Revenue</p>
-            <p>Tsh {calculateTotalMonthlyRevenue()}</p>
+            <p>Tsh</p>
           </div>
         </div>
 
         <div className="additional-section">
           <h2>Check Out</h2>
-
           <Link to="/ProductList" className="styled-link">
             Product List
           </Link>
           <Link to="/SalesList" className="styled-link">
             Sales List
           </Link>
+        </div>
+
+        <div className="alert-section">
+          <h2>Alert: </h2>
+          <ul>
+            {findProductsRunningLow().map((product) => (
+              <li key={product.prod_id}>{product.prod_name}</li>
+            ))}
+          </ul>
         </div>
       </div>
       <Sidebar2 isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />

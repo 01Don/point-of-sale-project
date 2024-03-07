@@ -23,9 +23,7 @@ function HomePage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await axios.get("http://172.233.153.32
-
-:8000/products");
+        const response = await axios.get("http://localhost:8000/products");
         console.log("Product Names Response:", response.data);
         setProducts(response.data);
       } catch (error) {
@@ -43,9 +41,7 @@ function HomePage() {
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    const apiEndpoint = "http://172.233.153.32
-
-:8000/sales";
+    const apiEndpoint = "http://localhost:8000/sales";
 
     // Collect all sales data, including additional product input fields
     const allSalesData = [

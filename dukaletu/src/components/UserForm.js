@@ -30,7 +30,7 @@ function UserForm() {
   const handleSaveUser = (ev) => {
     ev.preventDefault();
 
-    const apiEndpoint = "http://172.233.153.32
+    const apiEndpoint = "http://localhost
 
 /:8000/users";
 

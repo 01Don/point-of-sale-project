@@ -8,9 +8,9 @@ echo "Building app"
 npm run build
 
 echo "Deploying files to server"
-scp -r build/ root@172.233.153.32
+scp -r build/ root@localhost
 
-:/var/www/172.233.153.32
+:/var/www/localhost
 
 /
 echo "Deployment complete"

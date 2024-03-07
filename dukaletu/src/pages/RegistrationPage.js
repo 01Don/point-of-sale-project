@@ -38,9 +38,7 @@ function RegistrationPage() {
 
     try {
       // Send registration request to the server
-      const response = await fetch("http://172.233.153.32
-
-:8000/register", {
+      const response = await fetch("http://localhost:8000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +67,7 @@ function RegistrationPage() {
   const handleDeleteAccount = async () => {
     try {
       const response = await fetch(
-        `http://172.233.153.32
+        `http://localhost
 
 :8000/delete-account?email=${registration.email}`,
         {

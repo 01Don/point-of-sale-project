@@ -9,6 +9,7 @@ class Product(BaseModel):
     prod_quantity: int
     prod_buyprice: float
     prod_saleprice: float
+    created_at: Optional[str] = None  
     prod_id: Optional[int] = None
 
 

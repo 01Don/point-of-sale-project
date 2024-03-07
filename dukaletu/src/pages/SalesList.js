@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./ManageStore.css";
+import "./SaleList.css"; 
 
-function ManageStore() {
+function SaleList() {
   const [products, setProducts] = useState([]);
   const [sales, setSales] = useState([]);
-  console.log("Data: ", sales);
 
   useEffect(() => {
-    axios.get("http://172.233.153.32
-:8000/products").then((response) => {
-      setProducts(response.data);
-    });
+    axios.get("http://localhost:8000/products")
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching products data:", error);
+      });
 
-    console.log("Fetching sales data...");
-    axios
-      .get("http://172.233.153.32
-:8000/sales")
+    axios.get("http://localhost:8000/sales")
       .then((response) => {
         console.log("Sales data fetched successfully:", response.data);
         setSales(response.data);
@@ -26,69 +25,62 @@ function ManageStore() {
       });
   }, []);
 
-<<<<<<< HEAD
-  const getProductById = (productId) => {
-    return products.find((product) => product.id === productId);
-=======
-  const handleGenerateReport = (reportType) => {
-    // Add logic to fetch different reports based on reportType
-    axios.get(`http://172.233.153.32:8000/reports/${reportType}`)
-      .then((response) => {
-        console.log(`${reportType} report fetched successfully:`, response.data);
-        // Handle the retrieved report data as needed
-      })
-      .catch((error) => {
-        console.error(`Error fetching ${reportType} report:`, error);
-      });
->>>>>>> 38b33c9a69b63fb751f9c01bc028e3ee965c202f
+  
+
+  const calculateProductPrice = (sale) => {
+    const product = products.find((p) => p.prod_id === sale.prod_id);
+    if (product) {
+      return product.prod_saleprice * sale.prod_quantity;
+    }
+    return 0; // Return 0 if product not found
+  };
+
+  const calculateTotalProductPrice = () => {
+    return sales.reduce((total, sale) => total + calculateProductPrice(sale), 0);
+  };
+
+  const calculateTotalQuantity = () => {
+    return sales.reduce((total, sale) => total + sale.prod_quantity, 0);
   };
 
   return (
     <div>
       <div className="table-container">
-        <div className="table-container">
-          <h2>List of Sales</h2>
-          <button onClick={() => handleGenerateReport('day')}>Generate Day Report</button>
-          <button onClick={() => handleGenerateReport('week')}>Generate Week Report</button>
-          <button onClick={() => handleGenerateReport('month')}>Generate Month Report</button>
-         
-          <table className="sales-table">
-            <thead>
-              <tr>
-                <th>Sale Date</th>
-                <th>Product Name</th>
-                <th>Total Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-<<<<<<< HEAD
-              {sales.map((sale) => (
+        <h2>List of Sales</h2>
+        <table className="sales-table">
+          <thead>
+            <tr>
+              <th>Sale Date</th>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Product Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sales.map((sale) => {
+              const product = products.find((p) => p.prod_id === sale.prod_id);
+              const productPrice = calculateProductPrice(sale);
+              return (
                 <tr key={sale.id} className="sale-row">
                   <td>{sale.sale_date}</td>
-                  <td>
-                    {getProductById(sale.product_id)?.product_name || "Unknown"}
-                  </td>
-                  <td>Tsh {sale.prod_saleprice}</td>
+                  <td>{product ? product.prod_name : "N/A"}</td>
+                  <td>{sale.prod_quantity}</td>
+                  <td>{productPrice}</td>
                 </tr>
-              ))}
-=======
-              {sales.map((sale) => {
-                const product = products.find((p) => p.id === sale.product_id);
-                return (
-                  <tr key={sale.id} className="sale-row">
-                    <td>{sale.sale_date}</td>
-                    <td>{product ? product.product_name : "N/A"}</td>
-                    <td>Tsh {sale.prod_saleprice}</td>
-                  </tr>
-                );
-              })}
->>>>>>> 38b33c9a69b63fb751f9c01bc028e3ee965c202f
-            </tbody>
-          </table>
-        </div>
+              );
+            })}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="2">Total:</td>
+              <td>{calculateTotalQuantity()}</td>
+              <td>{calculateTotalProductPrice()}</td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
   );
 }
 
-export default ManageStore;
+export default SaleList;

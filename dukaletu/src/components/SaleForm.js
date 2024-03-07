@@ -1,32 +1,63 @@
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
 
-export default function SaleForm({ products }) {
+export default function SaleForm({ products, setProducts }) { // Add setProducts as a prop
   const [sales, setSales] = useState([]);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    prod_id: '', // Initialize with an empty string
+    prod_quantity: '' // Initialize with an empty string
+  });
+
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    console.log("Data: ", formData);
-    let newSales = sales;
-    newSales.push({ ...formData });
+    const { prod_id, prod_quantity } = formData;
+    
+    // Find the product in the products array
+    const product = products.find((p) => p.prod_id === parseInt(prod_id));
+    
+    if (!product) {
+      // Handle the case where the selected product is not found
+      alert("Selected product not found");
+      return;
+    }
+    
+    // Check if the quantity exceeds the available stock
+    if (parseInt(prod_quantity) > product.prod_quantity) {
+      // Handle the case where the quantity exceeds available stock
+      alert("Insufficient stock for this product");
+      return;
+    }
+    
+    // Reduce the quantity by the sold quantity
+    const updatedProducts = products.map((p) =>
+      p.prod_id === parseInt(prod_id)
+        ? { ...p, prod_quantity: p.prod_quantity - parseInt(prod_quantity) }
+        : p
+    );
+    
+    // Update the products array with the new quantities
+   
+    // Add the sale to the sales array
+    const newSales = [...sales, { ...formData }];
     setSales(newSales);
-    setFormData({});
+    
+    // Reset form data and form
+    setFormData({ prod_id: "", prod_quantity: "" });
     ev.target.reset();
   };
-  const handeChange = (ev) => {
-    let { name, value } = ev.target;
+  
+
+  const handleChange = (ev) => {
+    const { name, value } = ev.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const deleteItem = (prod_id) => {
-    console.log("PDelete", prod_id, sales);
     setSales((prev) => prev.filter((s) => parseInt(s.prod_id) !== prod_id));
   };
 
-  const handlePostSales = (ev) => {
-    let url = "http://172.233.153.32
-
-:8000/sales";
+  const handlePostSales = () => {
+    const url = "http://localhost:8000/sales";
     axios
       .post(url, sales)
       .then((res) => {
@@ -41,41 +72,43 @@ export default function SaleForm({ products }) {
   return (
     <div className="sales-form">
       <ul className="sales-list">
-        {sales.map((s, idx) => {
-          console.log("Products", products, s);
-          let found = products.find((p) => p.prod_id === parseInt(s.prod_id));
-          console.log("Found: ", found);
-          return (
-            <div className="del">
-              <li className="flex">
-                <p>
-                  {found.prod_name} - {s.prod_quantity}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => deleteItem(parseInt(s.prod_id))}
-                  className="del-button"
-                >
-                  DEL
-                </button>
-              </li>
-            </div>
-          );
-        })}
+      {sales.map((s, idx) => {
+  const foundProduct = products.find((p) => p.prod_id === parseInt(s.prod_id));
+  if (!foundProduct) return null; // Skip rendering if product not found
+  return (
+    <div key={idx} className="del">
+      <li className="flex">
+        <p>
+          {foundProduct.prod_name} - Quantity: {s.prod_quantity} - Price: Tsh {foundProduct.prod_saleprice * s.prod_quantity }
+        </p>
+        <button
+          type="button"
+          onClick={() => deleteItem(parseInt(s.prod_id))}
+          className="del-button"
+        >
+          DEL
+        </button>
+      </li>
+    </div>
+  );
+})}
+
       </ul>
       <form onSubmit={handleSubmit} className="form">
         <div className="fields">
           <div className="product-control">
             <label>Product</label>
             <select
-              value={formData["prod_id"]}
+              value={formData["prod_id"] || ''} // Ensure a default value if undefined
               name="prod_id"
-              onChange={handeChange}
+              onChange={handleChange}
               required
               className="input-form"
             >
               <option value="">Select Product</option>
-              {products.map((p) => (
+              {products
+              .filter((p) => p.prod_quantity > 0)
+              .map((p) => (
                 <option key={p.prod_id} value={p.prod_id}>
                   {p.prod_name}
                 </option>
@@ -85,12 +118,12 @@ export default function SaleForm({ products }) {
           <div className="quantity-control">
             <label>Quantity</label>
             <input
-              value={formData["quantity"]}
+              value={formData["prod_quantity"]}
               type="number"
               name="prod_quantity"
               placeholder="Qty"
               required
-              onChange={handeChange}
+              onChange={handleChange}
               className="input-form1"
             />
           </div>
@@ -99,7 +132,6 @@ export default function SaleForm({ products }) {
           <button className="add-button">Add</button>
         </div>
       </form>
-
       <div className="submit-container">
         <button
           type="button"
